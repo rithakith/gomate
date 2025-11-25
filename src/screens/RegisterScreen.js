@@ -28,8 +28,13 @@ export default function RegisterScreen({ navigation }) {
     setErrors({});
 
     // Validate form
-    const validation = validateRegisterForm(username, email, password, confirmPassword);
-    
+    const validation = validateRegisterForm(
+      username,
+      email,
+      password,
+      confirmPassword,
+    );
+
     if (!validation.isValid) {
       setErrors(validation.errors);
       const firstError = Object.values(validation.errors)[0];
@@ -52,7 +57,7 @@ export default function RegisterScreen({ navigation }) {
       Alert.alert('Success', 'Account created successfully!', [
         { text: 'OK', onPress: () => navigation.navigate('Login') },
       ]);
-      
+
       // Clear form
       setUsername('');
       setEmail('');
@@ -87,7 +92,7 @@ export default function RegisterScreen({ navigation }) {
                 placeholder="Choose a username"
                 placeholderTextColor="#999"
                 value={username}
-                onChangeText={(text) => {
+                onChangeText={text => {
                   setUsername(text);
                   if (errors.username) {
                     setErrors({ ...errors, username: null });
@@ -108,7 +113,7 @@ export default function RegisterScreen({ navigation }) {
                 placeholder="Enter your email"
                 placeholderTextColor="#999"
                 value={email}
-                onChangeText={(text) => {
+                onChangeText={text => {
                   setEmail(text);
                   if (errors.email) {
                     setErrors({ ...errors, email: null });
@@ -130,7 +135,7 @@ export default function RegisterScreen({ navigation }) {
                 placeholder="Create a password"
                 placeholderTextColor="#999"
                 value={password}
-                onChangeText={(text) => {
+                onChangeText={text => {
                   setPassword(text);
                   if (errors.password) {
                     setErrors({ ...errors, password: null });
@@ -147,11 +152,14 @@ export default function RegisterScreen({ navigation }) {
             <View style={styles.inputContainer}>
               <Text style={styles.label}>Confirm Password</Text>
               <TextInput
-                style={[styles.input, errors.confirmPassword && styles.inputError]}
+                style={[
+                  styles.input,
+                  errors.confirmPassword && styles.inputError,
+                ]}
                 placeholder="Confirm your password"
                 placeholderTextColor="#999"
                 value={confirmPassword}
-                onChangeText={(text) => {
+                onChangeText={text => {
                   setConfirmPassword(text);
                   if (errors.confirmPassword) {
                     setErrors({ ...errors, confirmPassword: null });

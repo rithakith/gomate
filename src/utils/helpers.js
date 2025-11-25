@@ -5,14 +5,14 @@
  * @param {string} time24 - Time in 24-hour format (HH:MM)
  * @returns {string} - Time in 12-hour format (h:MM AM/PM)
  */
-export const formatTime12Hour = (time24) => {
+export const formatTime12Hour = time24 => {
   if (!time24) return '';
-  
+
   const [hours, minutes] = time24.split(':');
   const hour = parseInt(hours, 10);
   const ampm = hour >= 12 ? 'PM' : 'AM';
   const hour12 = hour % 12 || 12;
-  
+
   return `${hour12}:${minutes} ${ampm}`;
 };
 
@@ -21,9 +21,9 @@ export const formatTime12Hour = (time24) => {
  * @param {string} status - Journey status
  * @returns {string} - Color code
  */
-export const getStatusColor = (status) => {
+export const getStatusColor = status => {
   if (!status) return '#999';
-  
+
   if (status === 'On Time') return '#34C759';
   if (status.includes('Delayed')) return '#FF9500';
   if (status === 'Cancelled') return '#FF3B30';
@@ -35,9 +35,9 @@ export const getStatusColor = (status) => {
  * @param {string} status - Journey status
  * @returns {string} - Status icon
  */
-export const getStatusIcon = (status) => {
+export const getStatusIcon = status => {
   if (!status) return '•';
-  
+
   if (status === 'On Time') return '✓';
   if (status.includes('Delayed')) return '⚠';
   if (status === 'Cancelled') return '✕';
@@ -60,11 +60,11 @@ export const truncateText = (text, maxLength = 50) => {
  * @param {number|string} price - Price value
  * @returns {string} - Formatted price
  */
-export const formatPrice = (price) => {
+export const formatPrice = price => {
   if (typeof price === 'string' && price.startsWith('£')) {
     return price;
   }
-  
+
   const numPrice = typeof price === 'string' ? parseFloat(price) : price;
   return `£${numPrice.toFixed(2)}`;
 };
@@ -74,9 +74,9 @@ export const formatPrice = (price) => {
  * @param {string} text - Text to capitalize
  * @returns {string} - Capitalized text
  */
-export const capitalizeWords = (text) => {
+export const capitalizeWords = text => {
   if (!text) return '';
-  
+
   return text
     .toLowerCase()
     .split(' ')

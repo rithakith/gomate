@@ -29,7 +29,7 @@ export default function LoginScreen({ navigation }) {
 
     // Validate form
     const validation = validateLoginForm(username, password);
-    
+
     if (!validation.isValid) {
       setErrors(validation.errors);
       const firstError = Object.values(validation.errors)[0];
@@ -84,7 +84,7 @@ export default function LoginScreen({ navigation }) {
                 placeholder="Enter your username"
                 placeholderTextColor="#999"
                 value={username}
-                onChangeText={(text) => {
+                onChangeText={text => {
                   setUsername(text);
                   if (errors.username) {
                     setErrors({ ...errors, username: null });
@@ -105,7 +105,7 @@ export default function LoginScreen({ navigation }) {
                 placeholder="Enter your password"
                 placeholderTextColor="#999"
                 value={password}
-                onChangeText={(text) => {
+                onChangeText={text => {
                   setPassword(text);
                   if (errors.password) {
                     setErrors({ ...errors, password: null });

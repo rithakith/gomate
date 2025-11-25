@@ -4,13 +4,13 @@ export const COLORS = {
   primary: '#007AFF',
   secondary: '#34C759',
   accent: '#FFD700',
-  
+
   // Status Colors
   success: '#34C759',
   warning: '#FF9500',
   error: '#FF3B30',
   info: '#007AFF',
-  
+
   // Text Colors
   text: {
     primary: '#333',
@@ -18,14 +18,14 @@ export const COLORS = {
     tertiary: '#999',
     light: '#fff',
   },
-  
+
   // Background Colors
   background: {
     primary: '#fff',
     secondary: '#f5f5f5',
     tertiary: '#f0f0f0',
   },
-  
+
   // Border Colors
   border: {
     light: '#e0e0e0',
@@ -44,7 +44,7 @@ export const SIZES = {
     xl: 20,
     xxl: 24,
   },
-  
+
   // Font Sizes
   fontSize: {
     xs: 10,
@@ -56,7 +56,7 @@ export const SIZES = {
     xxxl: 24,
     huge: 28,
   },
-  
+
   // Border Radius
   borderRadius: {
     sm: 8,
@@ -65,7 +65,7 @@ export const SIZES = {
     xl: 20,
     round: 100,
   },
-  
+
   // Icon Sizes
   icon: {
     sm: 16,
