@@ -48,7 +48,9 @@ export default function FavouritesScreen({ navigation }) {
       </View>
 
       <View style={styles.timeContainer}>
-        <Text style={styles.timeText}>{item.departure_time} - {item.arrival_time}</Text>
+        <Text style={styles.timeText}>
+          {item.departure_time} - {item.arrival_time}
+        </Text>
         <Text style={styles.durationText}>{item.duration}</Text>
       </View>
 

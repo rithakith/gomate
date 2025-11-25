@@ -82,9 +82,7 @@ export default function JourneyDetailsScreen({ route, navigation }) {
           <View style={styles.divider} />
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Price</Text>
-            <Text style={styles.infoValue}>
-              {journey.price}
-            </Text>
+            <Text style={styles.infoValue}>{journey.price}</Text>
           </View>
         </View>
 
@@ -99,8 +97,8 @@ export default function JourneyDetailsScreen({ route, navigation }) {
           {journey.status.includes('Delayed') && (
             <View style={styles.warningBox}>
               <Text style={styles.warningText}>
-                This service is currently experiencing delays. Please check
-                for updates before traveling.
+                This service is currently experiencing delays. Please check for
+                updates before traveling.
               </Text>
             </View>
           )}

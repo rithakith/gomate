@@ -95,9 +95,7 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.arrow}>→</Text>
           <Text style={styles.location}>{item.to}</Text>
         </View>
-        <TouchableOpacity
-          onPress={e => handleToggleFavourite(item.id, e)}
-        >
+        <TouchableOpacity onPress={e => handleToggleFavourite(item.id, e)}>
           <Text style={styles.star}>
             {favourites.includes(item.id) ? '★' : '☆'}
           </Text>
@@ -105,7 +103,9 @@ export default function HomeScreen({ navigation }) {
       </View>
 
       <View style={styles.details}>
-        <Text style={styles.detailText}>{item.departure_time} - {item.arrival_time}</Text>
+        <Text style={styles.detailText}>
+          {item.departure_time} - {item.arrival_time}
+        </Text>
         <Text style={styles.detailText}>{item.duration}</Text>
       </View>
 

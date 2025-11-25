@@ -25,7 +25,10 @@ function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="HomeMain" component={HomeScreen} />
-      <HomeStack.Screen name="JourneyDetails" component={JourneyDetailsScreen} />
+      <HomeStack.Screen
+        name="JourneyDetails"
+        component={JourneyDetailsScreen}
+      />
     </HomeStack.Navigator>
   );
 }
@@ -34,8 +37,14 @@ function HomeStackScreen() {
 function FavouritesStackScreen() {
   return (
     <FavouritesStack.Navigator screenOptions={{ headerShown: false }}>
-      <FavouritesStack.Screen name="FavouritesMain" component={FavouritesScreen} />
-      <FavouritesStack.Screen name="JourneyDetails" component={JourneyDetailsScreen} />
+      <FavouritesStack.Screen
+        name="FavouritesMain"
+        component={FavouritesScreen}
+      />
+      <FavouritesStack.Screen
+        name="JourneyDetails"
+        component={JourneyDetailsScreen}
+      />
     </FavouritesStack.Navigator>
   );
 }
