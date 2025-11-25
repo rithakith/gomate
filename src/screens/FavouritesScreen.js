@@ -19,13 +19,6 @@ export default function FavouritesScreen({ navigation }) {
     favourites.includes(journey.id),
   );
 
-  const getStatusColor = status => {
-    if (status === 'On Time') return '#34C759';
-    if (status.includes('Delayed')) return '#FF9500';
-    if (status === 'Cancelled') return '#FF3B30';
-    return '#999';
-  };
-
   const handleRemoveFavourite = journeyId => {
     dispatch(toggleFavourite(journeyId));
   };
@@ -55,36 +48,12 @@ export default function FavouritesScreen({ navigation }) {
       </View>
 
       <View style={styles.timeContainer}>
-        <View style={styles.timeBlock}>
-          <Text style={styles.timeLabel}>Departs</Text>
-          <Text style={styles.timeValue}>{item.departure_time}</Text>
-        </View>
-        <View style={styles.durationBlock}>
-          <Text style={styles.durationText}>{item.duration}</Text>
-        </View>
-        <View style={styles.timeBlock}>
-          <Text style={styles.timeLabel}>Arrives</Text>
-          <Text style={styles.timeValue}>{item.arrival_time}</Text>
-        </View>
-      </View>
-
-      <View style={styles.detailsContainer}>
-        <View style={styles.operatorContainer}>
-          <Text style={styles.operatorLabel}>Operator: </Text>
-          <Text style={styles.operatorValue}>{item.operator}</Text>
-        </View>
-        <View
-          style={[
-            styles.statusBadge,
-            { backgroundColor: getStatusColor(item.status) },
-          ]}
-        >
-          <Text style={styles.statusText}>{item.status}</Text>
-        </View>
+        <Text style={styles.timeText}>{item.departure_time} - {item.arrival_time}</Text>
+        <Text style={styles.durationText}>{item.duration}</Text>
       </View>
 
       <View style={styles.footer}>
-        <Text style={styles.typeText}>🚂 {item.type}</Text>
+        <Text style={styles.operatorText}>{item.operator}</Text>
         <Text style={styles.priceText}>{item.price}</Text>
       </View>
     </TouchableOpacity>
@@ -92,7 +61,6 @@ export default function FavouritesScreen({ navigation }) {
 
   const renderEmptyState = () => (
     <View style={styles.emptyContainer}>
-      <Text style={styles.emptyIcon}>☆</Text>
       <Text style={styles.emptyTitle}>No Favourites Yet</Text>
       <Text style={styles.emptyText}>
         Tap the star icon on any journey to add it to your favourites.
@@ -103,7 +71,7 @@ export default function FavouritesScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>My Favourites</Text>
+        <Text style={styles.headerTitle}>Favourites</Text>
         <Text style={styles.headerSubtitle}>
           {favouriteJourneys.length}{' '}
           {favouriteJourneys.length === 1 ? 'journey' : 'journeys'}
@@ -127,18 +95,17 @@ export default function FavouritesScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
   },
   header: {
-    backgroundColor: '#fff',
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#ddd',
   },
   headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 24,
+    fontWeight: '600',
+    color: '#000',
     marginBottom: 4,
   },
   headerSubtitle: {
@@ -152,123 +119,76 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   journeyCard: {
-    backgroundColor: '#fff',
-    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
     padding: 16,
     marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     marginBottom: 12,
   },
   routeContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap',
   },
   fromText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: '600',
+    color: '#000',
   },
   arrowText: {
     fontSize: 16,
-    color: '#007AFF',
+    color: '#000',
     marginHorizontal: 8,
   },
   toText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: '600',
+    color: '#000',
   },
   favouriteButton: {
     padding: 4,
   },
   favouriteIcon: {
-    fontSize: 24,
-    color: '#FFD700',
+    fontSize: 20,
+    color: '#000',
   },
   timeContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 12,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#e0e0e0',
+    paddingVertical: 8,
   },
-  timeBlock: {
-    flex: 1,
-  },
-  timeLabel: {
-    fontSize: 12,
-    color: '#999',
-    marginBottom: 4,
-  },
-  timeValue: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  durationBlock: {
-    paddingHorizontal: 12,
-  },
-  durationText: {
-    fontSize: 14,
-    color: '#007AFF',
-    fontWeight: '600',
-  },
-  detailsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginTop: 12,
-  },
-  operatorContainer: {
-    flexDirection: 'row',
-    flex: 1,
-  },
-  operatorLabel: {
+  timeText: {
     fontSize: 14,
     color: '#666',
   },
-  operatorValue: {
+  durationText: {
     fontSize: 14,
-    color: '#333',
-    fontWeight: '600',
-  },
-  statusBadge: {
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  statusText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
+    color: '#666',
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 12,
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
   },
-  typeText: {
+  operatorText: {
     fontSize: 14,
-    color: '#666',
+    color: '#000',
   },
   priceText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#34C759',
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#000',
   },
   emptyContainer: {
     flex: 1,
@@ -276,21 +196,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 40,
   },
-  emptyIcon: {
-    fontSize: 80,
-    marginBottom: 20,
-    opacity: 0.3,
-  },
   emptyTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#000',
     marginBottom: 12,
   },
   emptyText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#666',
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 20,
   },
 });

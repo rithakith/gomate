@@ -16,13 +16,6 @@ export default function JourneyDetailsScreen({ route, navigation }) {
   const favourites = useSelector(state => state.journeys.favourites);
   const isFavourite = favourites.includes(journey.id);
 
-  const getStatusColor = status => {
-    if (status === 'On Time') return '#34C759';
-    if (status.includes('Delayed')) return '#FF9500';
-    if (status === 'Cancelled') return '#FF3B30';
-    return '#999';
-  };
-
   const handleToggleFavourite = () => {
     dispatch(toggleFavourite(journey.id));
   };
@@ -36,7 +29,7 @@ export default function JourneyDetailsScreen({ route, navigation }) {
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
-            <Text style={styles.backButtonText}>← Back</Text>
+            <Text style={styles.backButtonText}>Back</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.favouriteButton}
@@ -48,25 +41,10 @@ export default function JourneyDetailsScreen({ route, navigation }) {
 
         {/* Journey Title */}
         <View style={styles.titleSection}>
-          <Text style={styles.title}>Journey Details</Text>
           <Text style={styles.route}>
             {journey.from} → {journey.to}
           </Text>
-        </View>
-
-        {/* Status Card */}
-        <View style={styles.card}>
-          <View style={styles.statusContainer}>
-            <Text style={styles.cardLabel}>Status</Text>
-            <View
-              style={[
-                styles.statusBadge,
-                { backgroundColor: getStatusColor(journey.status) },
-              ]}
-            >
-              <Text style={styles.statusText}>{journey.status}</Text>
-            </View>
-          </View>
+          <Text style={styles.subtitle}>Status: {journey.status}</Text>
         </View>
 
         {/* Time Details Card */}
@@ -80,7 +58,6 @@ export default function JourneyDetailsScreen({ route, navigation }) {
             </View>
             <View style={styles.durationContainer}>
               <Text style={styles.durationText}>{journey.duration}</Text>
-              <Text style={styles.arrow}>→</Text>
             </View>
             <View style={styles.timeColumn}>
               <Text style={styles.timeLabel}>Arrival</Text>
@@ -105,7 +82,7 @@ export default function JourneyDetailsScreen({ route, navigation }) {
           <View style={styles.divider} />
           <View style={styles.infoRow}>
             <Text style={styles.infoLabel}>Price</Text>
-            <Text style={[styles.infoValue, styles.priceText]}>
+            <Text style={styles.infoValue}>
               {journey.price}
             </Text>
           </View>
@@ -122,15 +99,15 @@ export default function JourneyDetailsScreen({ route, navigation }) {
           {journey.status.includes('Delayed') && (
             <View style={styles.warningBox}>
               <Text style={styles.warningText}>
-                ⚠️ This service is currently experiencing delays. Please check
+                This service is currently experiencing delays. Please check
                 for updates before traveling.
               </Text>
             </View>
           )}
           {journey.status === 'Cancelled' && (
-            <View style={[styles.warningBox, styles.cancelledBox]}>
-              <Text style={[styles.warningText, styles.cancelledText]}>
-                ❌ This service has been cancelled. Please find alternative
+            <View style={styles.warningBox}>
+              <Text style={styles.warningText}>
+                This service has been cancelled. Please find alternative
                 transport.
               </Text>
             </View>
@@ -149,7 +126,7 @@ export default function JourneyDetailsScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
   },
   scrollView: {
     flex: 1,
@@ -159,75 +136,51 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#fff',
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#ddd',
   },
   backButton: {
     padding: 8,
   },
   backButtonText: {
     fontSize: 16,
-    color: '#007AFF',
-    fontWeight: '600',
+    color: '#000',
   },
   favouriteButton: {
     padding: 8,
   },
   favouriteIcon: {
-    fontSize: 28,
-    color: '#FFD700',
+    fontSize: 24,
+    color: '#000',
   },
   titleSection: {
     padding: 20,
-    backgroundColor: '#fff',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
   },
   route: {
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#000',
+    marginBottom: 6,
+  },
+  subtitle: {
+    fontSize: 14,
     color: '#666',
   },
   card: {
-    backgroundColor: '#fff',
     marginHorizontal: 16,
     marginTop: 16,
     padding: 16,
-    borderRadius: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 4,
   },
   cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 12,
-  },
-  statusContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  cardLabel: {
     fontSize: 16,
-    color: '#666',
-  },
-  statusBadge: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-  },
-  statusText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 14,
+    fontWeight: '600',
+    color: '#000',
+    marginBottom: 12,
   },
   timeRow: {
     flexDirection: 'row',
@@ -240,13 +193,13 @@ const styles = StyleSheet.create({
   },
   timeLabel: {
     fontSize: 12,
-    color: '#999',
+    color: '#666',
     marginBottom: 4,
   },
   timeValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#000',
     marginBottom: 4,
   },
   locationText: {
@@ -260,13 +213,7 @@ const styles = StyleSheet.create({
   },
   durationText: {
     fontSize: 14,
-    color: '#007AFF',
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  arrow: {
-    fontSize: 20,
-    color: '#007AFF',
+    color: '#666',
   },
   infoRow: {
     flexDirection: 'row',
@@ -275,21 +222,17 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   infoLabel: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#666',
   },
   infoValue: {
-    fontSize: 16,
-    color: '#333',
-    fontWeight: '600',
-  },
-  priceText: {
-    color: '#34C759',
-    fontSize: 18,
+    fontSize: 14,
+    color: '#000',
+    fontWeight: '500',
   },
   divider: {
     height: 1,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: '#ddd',
     marginVertical: 8,
   },
   infoText: {
@@ -298,35 +241,28 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   warningBox: {
-    backgroundColor: '#FFF3CD',
+    backgroundColor: '#f5f5f5',
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 4,
     marginTop: 12,
-    borderLeftWidth: 4,
-    borderLeftColor: '#FF9500',
-  },
-  cancelledBox: {
-    backgroundColor: '#F8D7DA',
-    borderLeftColor: '#FF3B30',
+    borderLeftWidth: 3,
+    borderLeftColor: '#000',
   },
   warningText: {
     fontSize: 14,
-    color: '#856404',
-  },
-  cancelledText: {
-    color: '#721C24',
+    color: '#000',
   },
   bookButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#000',
     marginHorizontal: 16,
     marginVertical: 24,
-    padding: 16,
-    borderRadius: 12,
+    padding: 14,
+    borderRadius: 4,
     alignItems: 'center',
   },
   bookButtonText: {
     color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 16,
+    fontWeight: '500',
   },
 });

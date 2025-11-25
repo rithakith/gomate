@@ -80,14 +80,13 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
   },
   header: {
-    backgroundColor: '#fff',
     alignItems: 'center',
     paddingVertical: 32,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#ddd',
   },
   avatarContainer: {
     marginBottom: 16,
@@ -96,19 +95,19 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarText: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: '600',
     color: '#fff',
   },
   username: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#000',
     marginBottom: 4,
   },
   email: {
@@ -117,10 +116,9 @@ const styles = StyleSheet.create({
   },
   section: {
     marginTop: 24,
-    backgroundColor: '#fff',
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: '#ddd',
   },
   sectionTitle: {
     fontSize: 14,
@@ -138,28 +136,27 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: '#ddd',
   },
   menuText: {
     fontSize: 16,
-    color: '#333',
+    color: '#000',
   },
   menuArrow: {
-    fontSize: 24,
-    color: '#999',
+    fontSize: 20,
+    color: '#666',
   },
   logoutButton: {
-    backgroundColor: '#fff',
     margin: 24,
-    padding: 16,
-    borderRadius: 12,
+    padding: 14,
+    borderRadius: 4,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#ff3b30',
+    borderColor: '#f00',
   },
   logoutText: {
-    color: '#ff3b30',
+    color: '#f00',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '500',
   },
 });

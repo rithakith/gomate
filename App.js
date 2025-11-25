@@ -17,6 +17,28 @@ import FavouritesScreen from './src/screens/FavouritesScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+const HomeStack = createNativeStackNavigator();
+const FavouritesStack = createNativeStackNavigator();
+
+// Home Stack Navigator
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="HomeMain" component={HomeScreen} />
+      <HomeStack.Screen name="JourneyDetails" component={JourneyDetailsScreen} />
+    </HomeStack.Navigator>
+  );
+}
+
+// Favourites Stack Navigator
+function FavouritesStackScreen() {
+  return (
+    <FavouritesStack.Navigator screenOptions={{ headerShown: false }}>
+      <FavouritesStack.Screen name="FavouritesMain" component={FavouritesScreen} />
+      <FavouritesStack.Screen name="JourneyDetails" component={JourneyDetailsScreen} />
+    </FavouritesStack.Navigator>
+  );
+}
 
 // Bottom Tab Navigator for authenticated users
 function MainTabs() {
@@ -25,36 +47,36 @@ function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#007AFF',
-        tabBarInactiveTintColor: '#999',
+        tabBarActiveTintColor: '#000',
+        tabBarInactiveTintColor: '#666',
         tabBarStyle: {
           backgroundColor: '#fff',
           borderTopWidth: 1,
-          borderTopColor: '#e0e0e0',
+          borderTopColor: '#ddd',
           paddingBottom: 5,
           paddingTop: 5,
           height: 60,
         },
         tabBarLabelStyle: {
           fontSize: 12,
-          fontWeight: '600',
+          fontWeight: '500',
         },
         headerStyle: {
           backgroundColor: '#fff',
           elevation: 0,
           shadowOpacity: 0,
           borderBottomWidth: 1,
-          borderBottomColor: '#e0e0e0',
+          borderBottomColor: '#ddd',
         },
         headerTitleStyle: {
           fontSize: 18,
-          fontWeight: 'bold',
-          color: '#333',
+          fontWeight: '600',
+          color: '#000',
         },
         headerRight: () => (
           <View style={styles.headerRight}>
             <Text style={styles.headerUsername}>
-              👤 {user?.username || 'Guest'}
+              {user?.username || 'Guest'}
             </Text>
           </View>
         ),
@@ -62,19 +84,19 @@ function MainTabs() {
     >
       <Tab.Screen
         name="Journeys"
-        component={HomeScreen}
+        component={HomeStackScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Text style={{ fontSize: 24 }}>{focused ? '🚂' : '🚃'}</Text>
+            <Text style={{ fontSize: 20 }}>{focused ? '★' : '☆'}</Text>
           ),
         }}
       />
       <Tab.Screen
         name="Favourites"
-        component={FavouritesScreen}
+        component={FavouritesStackScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Text style={{ fontSize: 24 }}>{focused ? '★' : '☆'}</Text>
+            <Text style={{ fontSize: 20 }}>{focused ? '★' : '☆'}</Text>
           ),
         }}
       />
@@ -83,7 +105,7 @@ function MainTabs() {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Text style={{ fontSize: 24 }}>{focused ? '👤' : '👥'}</Text>
+            <Text style={{ fontSize: 20 }}>{focused ? '●' : '○'}</Text>
           ),
         }}
       />
@@ -149,12 +171,12 @@ const styles = StyleSheet.create({
     marginRight: 16,
     paddingHorizontal: 12,
     paddingVertical: 6,
-    backgroundColor: '#f0f0f0',
-    borderRadius: 20,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 4,
   },
   headerUsername: {
     fontSize: 14,
-    fontWeight: '600',
-    color: '#333',
+    fontWeight: '500',
+    color: '#000',
   },
 });

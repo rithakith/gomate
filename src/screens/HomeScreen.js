@@ -89,73 +89,29 @@ export default function HomeScreen({ navigation }) {
       activeOpacity={0.7}
       onPress={() => handleJourneyPress(item)}
     >
-      <View style={styles.cardHeader}>
-        <View style={styles.iconContainer}>
-          <Text style={styles.icon}>🚂</Text>
-        </View>
-        <View style={styles.headerInfo}>
-          <Text style={styles.operator}>{item.operator}</Text>
-          <View
-            style={[
-              styles.statusBadge,
-              { backgroundColor: getStatusColor(item.status) + '20' },
-            ]}
-          >
-            <Text
-              style={[
-                styles.statusIcon,
-                { color: getStatusColor(item.status) },
-              ]}
-            >
-              {getStatusIcon(item.status)}
-            </Text>
-            <Text
-              style={[styles.status, { color: getStatusColor(item.status) }]}
-            >
-              {item.status}
-            </Text>
-          </View>
+      <View style={styles.row}>
+        <View style={styles.routeInfo}>
+          <Text style={styles.location}>{item.from}</Text>
+          <Text style={styles.arrow}>→</Text>
+          <Text style={styles.location}>{item.to}</Text>
         </View>
         <TouchableOpacity
-          style={styles.favouriteButton}
           onPress={e => handleToggleFavourite(item.id, e)}
         >
-          <Text style={styles.favouriteIcon}>
+          <Text style={styles.star}>
             {favourites.includes(item.id) ? '★' : '☆'}
           </Text>
         </TouchableOpacity>
       </View>
 
-      <View style={styles.routeContainer}>
-        <View style={styles.routePoint}>
-          <View style={styles.dotStart} />
-          <View style={styles.routeInfo}>
-            <Text style={styles.location}>{item.from}</Text>
-            <Text style={styles.time}>{item.departure_time}</Text>
-          </View>
-        </View>
-
-        <View style={styles.routeLine} />
-
-        <View style={styles.routePoint}>
-          <View style={styles.dotEnd} />
-          <View style={styles.routeInfo}>
-            <Text style={styles.location}>{item.to}</Text>
-            <Text style={styles.time}>{item.arrival_time}</Text>
-          </View>
-        </View>
+      <View style={styles.details}>
+        <Text style={styles.detailText}>{item.departure_time} - {item.arrival_time}</Text>
+        <Text style={styles.detailText}>{item.duration}</Text>
       </View>
 
-      <View style={styles.cardFooter}>
-        <View style={styles.footerItem}>
-          <Text style={styles.footerLabel}>Duration</Text>
-          <Text style={styles.footerValue}>{item.duration}</Text>
-        </View>
-        <View style={styles.footerDivider} />
-        <View style={styles.footerItem}>
-          <Text style={styles.footerLabel}>Price</Text>
-          <Text style={styles.footerPrice}>{item.price}</Text>
-        </View>
+      <View style={styles.bottom}>
+        <Text style={styles.operator}>{item.operator}</Text>
+        <Text style={styles.price}>{item.price}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -172,12 +128,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View>
-          <Text style={styles.greeting}>
-            Hello, {user?.username || 'Guest'}! 👋
-          </Text>
-          <Text style={styles.subtitle}>Find your next journey</Text>
-        </View>
+        <Text style={styles.title}>Journeys</Text>
       </View>
 
       <FlatList
@@ -206,177 +157,95 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
   },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
   },
   loadingText: {
-    marginTop: 12,
-    fontSize: 16,
+    marginTop: 10,
+    fontSize: 14,
     color: '#666',
   },
   header: {
-    backgroundColor: '#fff',
-    padding: 20,
+    padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    borderBottomColor: '#ddd',
   },
-  greeting: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 4,
-  },
-  subtitle: {
-    fontSize: 14,
-    color: '#666',
+  title: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#000',
   },
   listContainer: {
     padding: 16,
   },
   card: {
     backgroundColor: '#fff',
-    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
     padding: 16,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3,
+    marginBottom: 12,
   },
-  cardHeader: {
+  row: {
     flexDirection: 'row',
-    marginBottom: 16,
-  },
-  iconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#f0f0f0',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginRight: 12,
-  },
-  icon: {
-    fontSize: 24,
-  },
-  headerInfo: {
-    flex: 1,
-    justifyContent: 'center',
-  },
-  favouriteButton: {
-    padding: 4,
-    marginLeft: 8,
-  },
-  favouriteIcon: {
-    fontSize: 24,
-    color: '#FFD700',
-  },
-  operator: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 4,
-  },
-  statusBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  statusIcon: {
-    fontSize: 10,
-    marginRight: 4,
-    fontWeight: 'bold',
-  },
-  status: {
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  routeContainer: {
-    marginBottom: 16,
-  },
-  routePoint: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  dotStart: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: '#007AFF',
-    marginRight: 12,
-  },
-  dotEnd: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    backgroundColor: '#34C759',
-    marginRight: 12,
-  },
-  routeLine: {
-    width: 2,
-    height: 24,
-    backgroundColor: '#e0e0e0',
-    marginLeft: 5,
-    marginVertical: 4,
+    marginBottom: 12,
   },
   routeInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
     flex: 1,
   },
   location: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 2,
+    fontWeight: '500',
+    color: '#000',
   },
-  time: {
+  arrow: {
+    fontSize: 16,
+    color: '#666',
+    marginHorizontal: 8,
+  },
+  star: {
+    fontSize: 20,
+    color: '#000',
+  },
+  details: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  detailText: {
     fontSize: 14,
     color: '#666',
   },
-  cardFooter: {
+  bottom: {
     flexDirection: 'row',
-    paddingTop: 16,
+    justifyContent: 'space-between',
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
+    borderTopColor: '#eee',
+    paddingTop: 12,
   },
-  footerItem: {
-    flex: 1,
-    alignItems: 'center',
+  operator: {
+    fontSize: 14,
+    color: '#666',
   },
-  footerDivider: {
-    width: 1,
-    backgroundColor: '#e0e0e0',
-  },
-  footerLabel: {
-    fontSize: 12,
-    color: '#999',
-    marginBottom: 4,
-  },
-  footerValue: {
+  price: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
-  },
-  footerPrice: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#007AFF',
+    color: '#000',
   },
   emptyContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 60,
+    padding: 40,
   },
   emptyText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#999',
   },
 });
