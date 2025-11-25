@@ -69,13 +69,12 @@ export default function LoginScreen({ navigation }) {
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.content}>
-          {/* Header */}
-          <View style={styles.header}>
-            <Text style={styles.title}>Welcome Back</Text>
-            <Text style={styles.subtitle}>Sign in to continue</Text>
-          </View>
-
-          {/* Form */}
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.appName}>Gomate</Text>
+          <Text style={styles.title}>Welcome Back</Text>
+          <Text style={styles.subtitle}>Sign in to continue</Text>
+        </View>          {/* Form */}
           <View style={styles.form}>
             <View style={styles.inputContainer}>
               <Text style={styles.label}>Username</Text>
@@ -165,8 +164,14 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 40,
   },
+  appName: {
+    fontSize: 32,
+    fontWeight: '700',
+    color: '#000',
+    marginBottom: 16,
+  },
   title: {
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: '600',
     color: '#000',
     marginBottom: 8,

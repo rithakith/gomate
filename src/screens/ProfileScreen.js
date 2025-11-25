@@ -65,7 +65,7 @@ export default function ProfileScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.menuItem}>
-          <Text style={styles.menuText}>About</Text>
+          <Text style={styles.menuText}>About Gomate</Text>
           <Text style={styles.menuArrow}>›</Text>
         </TouchableOpacity>
       </View>
