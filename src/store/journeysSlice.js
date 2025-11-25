@@ -27,7 +27,7 @@ const journeysSlice = createSlice({
     toggleFavourite: (state, action) => {
       const journeyId = action.payload;
       const index = state.favourites.findIndex(id => id === journeyId);
-      
+
       if (index !== -1) {
         // Remove from favourites
         state.favourites.splice(index, 1);
@@ -35,7 +35,7 @@ const journeysSlice = createSlice({
         // Add to favourites
         state.favourites.push(journeyId);
       }
-      
+
       // Persist to AsyncStorage
       AsyncStorage.setItem('favourites', JSON.stringify(state.favourites));
     },

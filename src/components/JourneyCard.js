@@ -9,7 +9,7 @@ import { COLORS, SIZES, SHADOW } from '../constants/theme';
  * Displays journey information in a card format
  */
 const JourneyCard = ({ journey, onPress, onToggleFavourite, isFavourite }) => {
-  const handleFavouritePress = (e) => {
+  const handleFavouritePress = e => {
     e.stopPropagation();
     onToggleFavourite && onToggleFavourite(journey.id);
   };
@@ -41,10 +41,7 @@ const JourneyCard = ({ journey, onPress, onToggleFavourite, isFavourite }) => {
               {getStatusIcon(journey.status)}
             </Text>
             <Text
-              style={[
-                styles.status,
-                { color: getStatusColor(journey.status) },
-              ]}
+              style={[styles.status, { color: getStatusColor(journey.status) }]}
             >
               {journey.status}
             </Text>
@@ -55,9 +52,7 @@ const JourneyCard = ({ journey, onPress, onToggleFavourite, isFavourite }) => {
             style={styles.favouriteButton}
             onPress={handleFavouritePress}
           >
-            <Text style={styles.favouriteIcon}>
-              {isFavourite ? '★' : '☆'}
-            </Text>
+            <Text style={styles.favouriteIcon}>{isFavourite ? '★' : '☆'}</Text>
           </TouchableOpacity>
         )}
       </View>

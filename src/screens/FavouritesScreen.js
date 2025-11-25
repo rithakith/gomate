@@ -16,7 +16,7 @@ export default function FavouritesScreen({ navigation }) {
   const favourites = useSelector(state => state.journeys.favourites);
 
   const favouriteJourneys = journeys.filter(journey =>
-    favourites.includes(journey.id)
+    favourites.includes(journey.id),
   );
 
   const getStatusColor = status => {
@@ -74,7 +74,10 @@ export default function FavouritesScreen({ navigation }) {
           <Text style={styles.operatorValue}>{item.operator}</Text>
         </View>
         <View
-          style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) }]}
+          style={[
+            styles.statusBadge,
+            { backgroundColor: getStatusColor(item.status) },
+          ]}
         >
           <Text style={styles.statusText}>{item.status}</Text>
         </View>

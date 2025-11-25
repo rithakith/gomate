@@ -13,7 +13,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../context/AuthContext';
 import { getMockJourneys } from '../services/api';
-import { setJourneys, setLoading, loadFavourites, toggleFavourite } from '../store/journeysSlice';
+import {
+  setJourneys,
+  setLoading,
+  loadFavourites,
+  toggleFavourite,
+} from '../store/journeysSlice';
 
 export default function HomeScreen({ navigation }) {
   const { user } = useContext(AuthContext);
@@ -113,7 +118,7 @@ export default function HomeScreen({ navigation }) {
         </View>
         <TouchableOpacity
           style={styles.favouriteButton}
-          onPress={(e) => handleToggleFavourite(item.id, e)}
+          onPress={e => handleToggleFavourite(item.id, e)}
         >
           <Text style={styles.favouriteIcon}>
             {favourites.includes(item.id) ? '★' : '☆'}

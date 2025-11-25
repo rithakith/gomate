@@ -11,23 +11,16 @@ import { COLORS, SIZES } from '../constants/theme';
 const StatusBadge = ({ status, size }) => {
   const statusColor = getStatusColor(status);
   const statusIconChar = getStatusIcon(status);
-  
+
   const badgeSize = size === 'small' ? styles.badgeSmall : styles.badge;
   const textSize = size === 'small' ? styles.textSmall : styles.text;
 
   return (
-    <View
-      style={[
-        badgeSize,
-        { backgroundColor: statusColor + '20' },
-      ]}
-    >
+    <View style={[badgeSize, { backgroundColor: statusColor + '20' }]}>
       <Text style={[styles.icon, { color: statusColor }]}>
         {statusIconChar}
       </Text>
-      <Text style={[textSize, { color: statusColor }]}>
-        {status}
-      </Text>
+      <Text style={[textSize, { color: statusColor }]}>{status}</Text>
     </View>
   );
 };

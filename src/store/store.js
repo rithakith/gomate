@@ -5,7 +5,7 @@ export const store = configureStore({
   reducer: {
     journeys: journeysReducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),

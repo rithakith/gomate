@@ -42,9 +42,7 @@ export default function JourneyDetailsScreen({ route, navigation }) {
             style={styles.favouriteButton}
             onPress={handleToggleFavourite}
           >
-            <Text style={styles.favouriteIcon}>
-              {isFavourite ? '★' : '☆'}
-            </Text>
+            <Text style={styles.favouriteIcon}>{isFavourite ? '★' : '☆'}</Text>
           </TouchableOpacity>
         </View>
 
