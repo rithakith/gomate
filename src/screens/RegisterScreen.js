@@ -21,7 +21,12 @@ export default function RegisterScreen({ navigation }) {
   const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
-    if (!username.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+    if (
+      !username.trim() ||
+      !email.trim() ||
+      !password.trim() ||
+      !confirmPassword.trim()
+    ) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
@@ -46,10 +51,10 @@ export default function RegisterScreen({ navigation }) {
       };
 
       await AsyncStorage.setItem('registeredUser', JSON.stringify(newUser));
-      
+
       setLoading(false);
       Alert.alert('Success', 'Account created successfully!', [
-        { text: 'OK', onPress: () => navigation.navigate('Login') }
+        { text: 'OK', onPress: () => navigation.navigate('Login') },
       ]);
     } catch (error) {
       Alert.alert('Error', 'Something went wrong');

@@ -25,9 +25,9 @@ export default function LoginScreen({ navigation }) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
-    
+
     setLoading(true);
-    
+
     try {
       const savedUser = await AsyncStorage.getItem('registeredUser');
       const parsedUser = savedUser ? JSON.parse(savedUser) : null;
