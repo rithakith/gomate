@@ -77,12 +77,13 @@ export default function RegisterScreen({ navigation }) {
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.content}>
-        {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.appName}>Gomate</Text>
-          <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Sign up to get started</Text>
-        </View>          {/* Form */}
+          {/* Header */}
+          <View style={styles.header}>
+            <Text style={styles.appName}>Gomate</Text>
+            <Text style={styles.title}>Create Account</Text>
+            <Text style={styles.subtitle}>Sign up to get started</Text>
+          </View>{' '}
+          {/* Form */}
           <View style={styles.form}>
             <View style={styles.inputContainer}>
               <Text style={styles.label}>Username</Text>
@@ -184,7 +185,6 @@ export default function RegisterScreen({ navigation }) {
               )}
             </TouchableOpacity>
           </View>
-
           {/* Footer */}
           <View style={styles.footer}>
             <Text style={styles.footerText}>Already have an account? </Text>
