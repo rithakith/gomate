@@ -2,6 +2,9 @@
 #
 .DS_Store
 
+# API Config (contains credentials)
+src/config/config.js
+
 # Xcode
 #
 build/
