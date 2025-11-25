@@ -12,6 +12,8 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { validateRegisterForm } from '../utils/validation';
+import { COLORS, SIZES } from '../constants/theme';
 
 export default function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState('');
@@ -19,25 +21,19 @@ export default function RegisterScreen({ navigation }) {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleRegister = async () => {
-    if (
-      !username.trim() ||
-      !email.trim() ||
-      !password.trim() ||
-      !confirmPassword.trim()
-    ) {
-      Alert.alert('Error', 'Please fill in all fields');
-      return;
-    }
+    // Clear previous errors
+    setErrors({});
 
-    if (password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match');
-      return;
-    }
-
-    if (password.length < 4) {
-      Alert.alert('Error', 'Password must be at least 4 characters');
+    // Validate form
+    const validation = validateRegisterForm(username, email, password, confirmPassword);
+    
+    if (!validation.isValid) {
+      setErrors(validation.errors);
+      const firstError = Object.values(validation.errors)[0];
+      Alert.alert('Validation Error', firstError);
       return;
     }
 
@@ -45,9 +41,9 @@ export default function RegisterScreen({ navigation }) {
 
     try {
       const newUser = {
-        username: username,
+        username: username.trim(),
         password: password,
-        email: email,
+        email: email.trim().toLowerCase(),
       };
 
       await AsyncStorage.setItem('registeredUser', JSON.stringify(newUser));
@@ -56,8 +52,15 @@ export default function RegisterScreen({ navigation }) {
       Alert.alert('Success', 'Account created successfully!', [
         { text: 'OK', onPress: () => navigation.navigate('Login') },
       ]);
+      
+      // Clear form
+      setUsername('');
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
     } catch (error) {
-      Alert.alert('Error', 'Something went wrong');
+      console.error('Registration error:', error);
+      Alert.alert('Error', 'Something went wrong. Please try again.');
       setLoading(false);
     }
   };
@@ -80,54 +83,86 @@ export default function RegisterScreen({ navigation }) {
             <View style={styles.inputContainer}>
               <Text style={styles.label}>Username</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.input, errors.username && styles.inputError]}
                 placeholder="Choose a username"
                 placeholderTextColor="#999"
                 value={username}
-                onChangeText={setUsername}
+                onChangeText={(text) => {
+                  setUsername(text);
+                  if (errors.username) {
+                    setErrors({ ...errors, username: null });
+                  }
+                }}
                 autoCapitalize="none"
                 autoCorrect={false}
               />
+              {errors.username && (
+                <Text style={styles.errorText}>{errors.username}</Text>
+              )}
             </View>
 
             <View style={styles.inputContainer}>
               <Text style={styles.label}>Email</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.input, errors.email && styles.inputError]}
                 placeholder="Enter your email"
                 placeholderTextColor="#999"
                 value={email}
-                onChangeText={setEmail}
+                onChangeText={(text) => {
+                  setEmail(text);
+                  if (errors.email) {
+                    setErrors({ ...errors, email: null });
+                  }
+                }}
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
               />
+              {errors.email && (
+                <Text style={styles.errorText}>{errors.email}</Text>
+              )}
             </View>
 
             <View style={styles.inputContainer}>
               <Text style={styles.label}>Password</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.input, errors.password && styles.inputError]}
                 placeholder="Create a password"
                 placeholderTextColor="#999"
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={(text) => {
+                  setPassword(text);
+                  if (errors.password) {
+                    setErrors({ ...errors, password: null });
+                  }
+                }}
                 secureTextEntry
                 autoCapitalize="none"
               />
+              {errors.password && (
+                <Text style={styles.errorText}>{errors.password}</Text>
+              )}
             </View>
 
             <View style={styles.inputContainer}>
               <Text style={styles.label}>Confirm Password</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.input, errors.confirmPassword && styles.inputError]}
                 placeholder="Confirm your password"
                 placeholderTextColor="#999"
                 value={confirmPassword}
-                onChangeText={setConfirmPassword}
+                onChangeText={(text) => {
+                  setConfirmPassword(text);
+                  if (errors.confirmPassword) {
+                    setErrors({ ...errors, confirmPassword: null });
+                  }
+                }}
                 secureTextEntry
                 autoCapitalize="none"
               />
+              {errors.confirmPassword && (
+                <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+              )}
             </View>
 
             <TouchableOpacity
@@ -204,6 +239,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e0e0e0',
     color: '#333',
+  },
+  inputError: {
+    borderColor: '#FF3B30',
+    borderWidth: 2,
+  },
+  errorText: {
+    color: '#FF3B30',
+    fontSize: 12,
+    marginTop: 4,
+    marginLeft: 4,
   },
   button: {
     backgroundColor: '#007AFF',

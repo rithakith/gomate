@@ -13,16 +13,27 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../context/AuthContext';
+import { validateLoginForm } from '../utils/validation';
+import { COLORS, SIZES } from '../constants/theme';
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const { login } = useContext(AuthContext);
 
   const handleLogin = async () => {
-    if (!username.trim() || !password.trim()) {
-      Alert.alert('Error', 'Please fill in all fields');
+    // Clear previous errors
+    setErrors({});
+
+    // Validate form
+    const validation = validateLoginForm(username, password);
+    
+    if (!validation.isValid) {
+      setErrors(validation.errors);
+      const firstError = Object.values(validation.errors)[0];
+      Alert.alert('Validation Error', firstError);
       return;
     }
 
@@ -34,7 +45,7 @@ export default function LoginScreen({ navigation }) {
 
       if (
         !parsedUser ||
-        parsedUser.username !== username ||
+        parsedUser.username !== username.trim() ||
         parsedUser.password !== password
       ) {
         Alert.alert('Error', 'Invalid username or password');
@@ -42,10 +53,11 @@ export default function LoginScreen({ navigation }) {
         return;
       }
 
-      login(username);
+      login(username.trim(), parsedUser.email);
       setLoading(false);
     } catch (error) {
-      Alert.alert('Error', 'Something went wrong');
+      console.error('Login error:', error);
+      Alert.alert('Error', 'Something went wrong. Please try again.');
       setLoading(false);
     }
   };
@@ -68,27 +80,43 @@ export default function LoginScreen({ navigation }) {
             <View style={styles.inputContainer}>
               <Text style={styles.label}>Username</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.input, errors.username && styles.inputError]}
                 placeholder="Enter your username"
                 placeholderTextColor="#999"
                 value={username}
-                onChangeText={setUsername}
+                onChangeText={(text) => {
+                  setUsername(text);
+                  if (errors.username) {
+                    setErrors({ ...errors, username: null });
+                  }
+                }}
                 autoCapitalize="none"
                 autoCorrect={false}
               />
+              {errors.username && (
+                <Text style={styles.errorText}>{errors.username}</Text>
+              )}
             </View>
 
             <View style={styles.inputContainer}>
               <Text style={styles.label}>Password</Text>
               <TextInput
-                style={styles.input}
+                style={[styles.input, errors.password && styles.inputError]}
                 placeholder="Enter your password"
                 placeholderTextColor="#999"
                 value={password}
-                onChangeText={setPassword}
+                onChangeText={(text) => {
+                  setPassword(text);
+                  if (errors.password) {
+                    setErrors({ ...errors, password: null });
+                  }
+                }}
                 secureTextEntry
                 autoCapitalize="none"
               />
+              {errors.password && (
+                <Text style={styles.errorText}>{errors.password}</Text>
+              )}
             </View>
 
             <TouchableOpacity style={styles.forgotPassword}>
@@ -168,6 +196,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e0e0e0',
     color: '#333',
+  },
+  inputError: {
+    borderColor: '#FF3B30',
+    borderWidth: 2,
+  },
+  errorText: {
+    color: '#FF3B30',
+    fontSize: 12,
+    marginTop: 4,
+    marginLeft: 4,
   },
   forgotPassword: {
     alignSelf: 'flex-end',
